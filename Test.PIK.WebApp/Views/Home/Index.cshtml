@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('testSite', ['$scope', '$http', function ($scope, $http) {
+        $scope.IsWCFServerMessage = false;
+        $scope.class = 'ehlTpW';
+        $scope.Send = function () {
+            $http({
+                method: "POST",
+                url: "../Home/Send/",
+                dataType: 'json',
+                data: { login: $scope.login, lastName: $scope.LastName, firstName: $scope.firstName },
+                headers: { "Content-Type": "application/json" }
+            }).then(function successCallback(response) {
+                $scope.IsWCFServerMessage = true;
+                $scope.WCFServerMessage = response.data.join(' ');
+                if (response.data.length === 1)
+                    $scope.class = 'ehlTpP';
+            }, function errorCallback(response) {
+                alert(data.Message);
+            });
+        };
+    }]);
+</script>
+<form name="myForm" ng-app="myApp" ng-controller="testSite" novalidate>
+    <div class="jFfsMl">
+        <img src="https://0.pik.ru.cdn.pik-service.ru/specialoffers/0/186/img_9222-copy_6d1694fdfc43b1863eaf59434b53b707.jpg" class="cwYydQ">
+        <div class="leYtcV">
+            
+            <div class="cWySId">
+
+                <div class="hGvNWg">
+                    <span class="ehlTpW" ng-show="myForm.login.$error.required">Поле логин не может быть пустым.</span>
+                    <span class="ehlTpW" ng-show="myForm.login.$dirty && myForm.login.$error.pattern">
+                        Поле логин может содержать только латинские символы.
+                    </span>
+                    <span class="{{class}}" ng-if="IsWCFServerMessage">{{WCFServerMessage}}</span> 
+                    <div class="cuXDaB">
+                        <span value="" class="eNKLdK">Логин</span>
+                        <div value="" placeholder="Логин" class="iKilGe">
+                            <input pattern="" name="login" form="" value="" ng-model="login" ng-pattern="/^[a-zA-Z0-9]{1,20}$/" required>
+                        </div><div class="sc-fYxtnH gzoLcE">
+                            <div class="sc-tilXH ktPTIN">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hGvNWg">
+                    <span class="ehlTpW" ng-show="myForm.LastName.$dirty && myForm.LastName.$error.pattern">
+                        Поле фамилия может содержать только русские символы и начинаться с заглавной буквы.
+                    </span>
+                    <span class="ehlTpW" ng-show="myForm.LastName.$error.required">Поле фамилия не может быть пустым.</span>
+                    <div class="cuXDaB">
+                        <span value="" class="eNKLdK">Фамилия</span>
+                        <div value="" placeholder="Фамилия" class="iKilGe">
+                            <input pattern="" name="LastName" form="" value="" ng-model="LastName" ng-pattern="/^[А-Я][а-я]{1,20}$/" required>
+                        </div><div class="sc-fYxtnH gzoLcE">
+                            <div class="sc-tilXH ktPTIN">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hGvNWg">
+                    <span class="ehlTpW" ng-show="myForm.firstName.$dirty && myForm.firstName.$error.pattern">
+                        Поле имя может содержать только русские символы и начинаться с заглавной буквы.
+                    </span>
+                    <span class="ehlTpW" ng-show="myForm.firstName.$error.required">Поле имя не может быть пустым.</span>
+                    <div class="cuXDaB">
+                        <span value="" class="eNKLdK">Имя</span>
+                        <div value="" placeholder="Имя" class="iKilGe">
+                            <input pattern="" name="firstName" form="" value="" ng-model="firstName" ng-pattern="/^[А-Я][а-я]{1,20}$/"  required>
+                        </div><div class="sc-fYxtnH gzoLcE">
+                            <div class="sc-tilXH ktPTIN">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="WdBRk" type="button" ng-disabled="myForm.login.$error.required || (myForm.login.$dirty && myForm.login.$error.pattern)
+                        || myForm.LastName.$error.required || (myForm.LastName.$dirty && myForm.LastName.$error.pattern)
+                        || myForm.firstName.$error.required|| (myForm.firstName.$dirty && myForm.firstName.$error.pattern)"
+                         ng-click="Send()">
+                    @*kfbiLF disable*@
+                    Отправить
+                </button>
+
+            </div>
+        </div>
+    </div>
+</form>
